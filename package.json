@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@binance/connector": "^3.3.0",
+    "@google-cloud/bigquery": "^7.7.0",
+    "binance": "^2.10.4",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3"
+  }
+}
