@@ -1,8 +1,9 @@
+const http = require('http');
 const { Console } = require("console");
 const { WebsocketStream, Spot } = require("@binance/connector");
 const logger = new Console({ stdout: process.stdout, stderr: process.stderr });
 const { BigQuery } = require("@google-cloud/bigquery");
-const credentials = require("./key.json");
+// const credentials = require("./key.json");
 const { deleteTable, createTable } = require("./bigquery");
 const { SchemaKline } = require("./schema");
 const cron = require("node-cron");
@@ -10,7 +11,7 @@ const cron = require("node-cron");
 // Create a BigQuery client instance
 const bigqueryClient = new BigQuery({
   projectId: "binance-marketstream",
-  credentials,
+  // credentials,
 });
 
 const datasetId = "binance";
@@ -129,3 +130,22 @@ StreamStart();
 // }
 // close websocket stream
 // setTimeout(() => websocketStreamClient.disconnect(), 6000)s
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/ready') {
+    // Implement health check logic here (e.g., check WebSocket server status)
+    if (true) {
+      res.writeHead(200);
+      res.end('Healthy');
+    } else {
+    }
+  } else {
+    res.writeHead(404);
+    res.end('Not Found');
+  }
+});
+
+// Start the server
+server.listen(process.env.PORT || 8080, () => {
+  console.log('Server listening...');
+});
